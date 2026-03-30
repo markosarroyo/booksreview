@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: user-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/bookreviews-users
+
+server:
+  port: 8080
