@@ -32,7 +32,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> create(@RequestBody User user) {
         User saved = userService.save(user);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(201).body(saved);
     }
 
     @DeleteMapping("/{id}")
