@@ -1,0 +1,27 @@
+# Compiled
+target/
+*.class
+*.jar
+*.war
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# IDE - IntelliJ
+.idea/
+*.iml
+*.iws
+
+# IDE - VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Zips (no deberían estar en git)
+*.zip
