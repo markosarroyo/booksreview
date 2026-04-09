@@ -5,5 +5,5 @@ import java.util.List;
 
 
 public interface BookRepositoryCustom {
-    List<Book> advancedSearch(String title, String author);
+    List<Book> advancedSearch(String title, String genre, String summary);
 }

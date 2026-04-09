@@ -1,18 +1,24 @@
 package com.booksreview.bookservice.service;
 
+import com.booksreview.bookservice.client.UserServiceClient;
+import com.booksreview.bookservice.dto.BookWithAuthorDTO;
 import com.booksreview.bookservice.model.Book;
 import com.booksreview.bookservice.repository.BookRespository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
     private final BookRespository bookRespository;
+    private final UserServiceClient userServiceClient;
 
-    public BookService(BookRespository bookRespository) {
+    public BookService(BookRespository bookRespository, UserServiceClient userServiceClient) {
         this.bookRespository = bookRespository;
+        this.userServiceClient = userServiceClient;
     }
 
     public List<Book> findAll() {
@@ -28,7 +34,7 @@ public class BookService {
     }
 
     public List<Book> findByTitle(String title) {
-        return bookRespository.findByTittleIgnoreCase(title);
+        return bookRespository.findByTitleIgnoreCase(title);
     }
 
     public List<Book> findByGenre(String genre) {
@@ -42,6 +48,26 @@ public class BookService {
     public void deleteById(String id) {
         bookRespository.deleteById(id);
 
+    }
+
+    public List<BookWithAuthorDTO> advancedSearch(String title, String authorName) {
+        // 1. Buscar libros por título en MongoDB
+        List<Book> books = this.bookRespository.advancedSearch(title,"","");
+
+        // 2. Para cada libro, resolver el nombre del autor
+        return books.stream()
+                .map(book -> {
+                    String name = userServiceClient.getAuthorName(book.getAuthorId());
+                    // 3. Filtrar por nombre de autor si se proporcionó
+                    if (authorName != null && !authorName.isBlank()) {
+                        if (!name.toLowerCase().contains(authorName.toLowerCase())) {
+                            return null; // no cumple el criterio
+                        }
+                    }
+                    return new BookWithAuthorDTO(book, name);
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
 

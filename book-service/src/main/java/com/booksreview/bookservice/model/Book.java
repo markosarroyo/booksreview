@@ -13,9 +13,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Book {
     @Id
     String id;
-    String tittle;
+    String title;
     String summary;
     String genre;
     String coverUrl;
     String authorId; // id del usuario con rol AUTHOR
+
 }
