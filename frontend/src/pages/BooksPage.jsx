@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { Link } from 'react-router-dom'
+import { getBooks } from '../services/BookService'
 
 function BooksPage() {
   const [books, setBooks] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    axios.get('http://localhost:8081/api/books')
+    getBooks()
       .then(response => {
         setBooks(response.data)
         setLoading(false)
