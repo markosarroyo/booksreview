@@ -50,9 +50,9 @@ public class BookService {
 
     }
 
-    public List<BookWithAuthorDTO> advancedSearch(String title, String authorName) {
+    public List<BookWithAuthorDTO> advancedSearch(String title, String genre, String summary,String authorName) {
         // 1. Buscar libros por título en MongoDB
-        List<Book> books = this.bookRespository.advancedSearch(title,"","");
+        List<Book> books = this.bookRespository.advancedSearch(title,genre,summary);
 
         // 2. Para cada libro, resolver el nombre del autor
         return books.stream()

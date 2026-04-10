@@ -1,5 +1,6 @@
 package com.booksreview.bookservice.controller;
 
+import com.booksreview.bookservice.dto.BookWithAuthorDTO;
 import com.booksreview.bookservice.model.Book;
 import com.booksreview.bookservice.service.BookService;
 import org.springframework.http.ResponseEntity;
@@ -59,5 +60,10 @@ public class BookController {
     public ResponseEntity<Void> delete(@PathVariable String id) {
         bookService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/advanced-search")
+    public List <BookWithAuthorDTO> advancedSearch(@RequestParam(required = false) String title, @RequestParam(required = false) String genre, @RequestParam(required = false) String summary, @RequestParam(required = false)  String authorName){
+        return bookService.advancedSearch(title,genre,summary, authorName);
     }
 }
