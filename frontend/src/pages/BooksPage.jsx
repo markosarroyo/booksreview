@@ -28,7 +28,9 @@ function BooksPage() {
       ) : (
         books.map(book => (
           <div key={book.id}>
-            <h2>{book.title}</h2>
+            <h2>
+              <Link to={`/books/${book.id}`}>{book.title}</Link>
+            </h2>
             <p>{book.summary}</p>
             <p>Género: {book.genre}</p>
           </div>

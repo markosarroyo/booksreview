@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { getBookById } from '../services/bookService'
-import { getReviewsByBook, getAverageRating } from '../services/reviewService'
+import { getBookById } from '../services/BookService'
+import { getReviewsByBook, getAverageRating } from '../services/ReviewService'
 
 function BookDetailPage() {
   const { id } = useParams()
