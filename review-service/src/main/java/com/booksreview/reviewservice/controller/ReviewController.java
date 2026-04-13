@@ -2,6 +2,7 @@ package com.booksreview.reviewservice.controller;
 
 import com.booksreview.reviewservice.model.Review;
 import com.booksreview.reviewservice.service.ReviewService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<Review> save(@RequestBody Review review) {
+    public ResponseEntity<Review> save(@Valid @RequestBody Review review) {
         return ResponseEntity.status(201).body(reviewService.save(review));
     }
 
