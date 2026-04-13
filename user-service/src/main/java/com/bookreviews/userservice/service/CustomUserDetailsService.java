@@ -1,0 +1,23 @@
+package com.bookreviews.userservice.service;
+
+import com.bookreviews.userservice.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
+    private final UserRepository repo;
+
+    private CustomUserDetailsService(UserRepository repo) {
+        this.repo = repo;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+        return repo.findByUsername(username)
+                .orElseThrow(()-> new UsernameNotFoundException("User not found"));
+    }
+}
