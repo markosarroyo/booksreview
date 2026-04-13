@@ -3,6 +3,7 @@ package com.booksreview.bookservice.controller;
 import com.booksreview.bookservice.dto.BookWithAuthorDTO;
 import com.booksreview.bookservice.model.Book;
 import com.booksreview.bookservice.service.BookService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,12 +47,12 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> create(@RequestBody Book book) {
+    public ResponseEntity<Book> create(@Valid @RequestBody Book book) {
         return ResponseEntity.status(201).body(bookService.save(book));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> update(@PathVariable String id, @RequestBody Book book) {
+    public ResponseEntity<Book> update(@PathVariable String id,@Valid @RequestBody Book book) {
         book.setId(id);
         return ResponseEntity.ok(bookService.save(book));
     }

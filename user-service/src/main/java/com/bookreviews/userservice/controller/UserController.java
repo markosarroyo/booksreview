@@ -2,6 +2,7 @@ package com.bookreviews.userservice.controller;
 
 import com.bookreviews.userservice.model.User;
 import com.bookreviews.userservice.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user) {
+    public ResponseEntity<User> create(@Valid @RequestBody User user) {
         User saved = userService.save(user);
         return ResponseEntity.status(201).body(saved);
     }
