@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import BooksPage from './pages/BooksPage'
-import BookDetailPage from './pages/BookDetailPage'
+import BookDetailPage from './pages/BookDetailpage'
 import Navbar from './components/Navbar'
 
 function App() {

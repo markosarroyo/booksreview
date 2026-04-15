@@ -6,5 +6,5 @@ spring:
       uri: mongodb://localhost:27017/bookreviews-reviews
 
 server:
-  port: 8082
+  port: 8083
 

@@ -1,7 +1,7 @@
 package com.bookreviews.userservice.model;
 
 public enum Role {
-    ADMIN,
-    AUTOR,
-    LECTOR
+    ROLE_ADMIN,
+    ROLE_AUTHOR,
+    ROLE_READER
 }
