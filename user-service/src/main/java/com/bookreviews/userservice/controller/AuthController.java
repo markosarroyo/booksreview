@@ -8,11 +8,11 @@ import com.bookreviews.userservice.model.User;
 import com.bookreviews.userservice.repository.UserRepository;
 import com.bookreviews.userservice.security.JwtService;
 
+import jakarta.validation.Valid;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -64,7 +64,7 @@ public class AuthController {
                 request.getEmail(),
                 request.getUsername(),
                 passwordEncoder.encode(request.getPassword()),
-                Role.ROLE_READER // 👈 forzado
+                Role.ROLE_READER //  forzado
         );
 
         userRepository.save(user);
@@ -80,7 +80,7 @@ public class AuthController {
     // LOGIN
     // -------------------------
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody LoginRequest request) {
+    public AuthResponse login(@Valid @RequestBody LoginRequest request) {
 
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
