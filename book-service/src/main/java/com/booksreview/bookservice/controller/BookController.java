@@ -5,6 +5,7 @@ import com.booksreview.bookservice.model.Book;
 import com.booksreview.bookservice.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,6 +58,7 @@ public class BookController {
         return ResponseEntity.ok(bookService.save(book));
     }
 
+    @PreAuthorize("hasRole('ADMIN)")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         bookService.deleteById(id);

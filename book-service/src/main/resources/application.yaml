@@ -8,6 +8,6 @@ spring:
 server:
   port: 8082
 
-  jwt:
-    secret: "EnunLugardelamanchadecuyonombrenoquieroacordarmeviviaunhidalgo"
-    expiration: 3600000
+jwt:
+  secret: "EnunLugardelamanchadecuyonombrenoquieroacordarmeviviaunhidalgo"
+  expiration: 3600000
