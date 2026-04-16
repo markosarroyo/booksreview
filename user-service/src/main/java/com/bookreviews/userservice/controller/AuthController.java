@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.RoleStatus;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/auth")
@@ -58,18 +59,24 @@ public class AuthController {
             throw new RuntimeException("Email already exists");
         }
 
+        Set<Role> assignedRoles = (request.getRoles() == null || request.getRoles().isEmpty())
+                ? Set.of(Role.ROLE_READER)
+                : request.getRoles();
+
         User user = new User(
                 null,
                 request.getName(),
                 request.getEmail(),
                 request.getUsername(),
                 passwordEncoder.encode(request.getPassword()),
-                Role.ROLE_READER //  forzado
+                assignedRoles
         );
 
         userRepository.save(user);
 
-        List<String> roles = List.of(user.getRole().name());
+        List<String> roles = user.getRoles().stream()
+                .map(Enum::name) // Convierte cada Role en su String ("ROLE_ADMIN", etc.)
+                .toList();
 
         String token = jwtService.generateToken(user.getUsername(), roles);
 

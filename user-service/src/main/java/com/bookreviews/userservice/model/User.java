@@ -13,7 +13,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Document(collection = "users")
 @Data
@@ -42,13 +44,15 @@ public class User implements UserDetails {
     @Size(min = 6, max = 20, message = "Password must be between 6 and 20 characters")
     private String password;
 
-    @NotNull(message = "Role is required")
-    private Role role;
+    @NotEmpty(message = "At least one role is required")
+    private Set<Role> roles = new HashSet<>();
 
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
-        return List.of(new SimpleGrantedAuthority("ROLE_"+role.name()));
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.name()))
+                .toList(); // En Java 16+ esto devuelve una lista inmutable
     }
 
     @Override

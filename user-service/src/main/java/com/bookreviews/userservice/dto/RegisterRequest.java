@@ -4,6 +4,8 @@ import com.bookreviews.userservice.model.Role;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 public class RegisterRequest {
 
@@ -20,6 +22,8 @@ public class RegisterRequest {
     @NotBlank
     private String password;
 
-    @NotNull
-    private Role role;
+    // Cambiamos Role por Set<Role>
+    // Usamos @NotEmpty porque una colección no debe estar vacía
+    @NotEmpty
+    private Set<Role> roles;
 }
