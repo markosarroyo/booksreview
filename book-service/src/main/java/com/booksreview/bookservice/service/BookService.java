@@ -46,8 +46,10 @@ public class BookService {
     }
 
     public void deleteById(String id) {
+        if(this.findById(id).isEmpty()){
+            throw new RuntimeException("Book not found");
+        }
         bookRespository.deleteById(id);
-
     }
 
     public List<BookWithAuthorDTO> advancedSearch(String title, String genre, String summary,String authorName) {

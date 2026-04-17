@@ -45,6 +45,15 @@ public class GlobalExceptionHandler {
 
     }
 
+    //Runtime Exception
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Map<String,Object>> handleRuntimeException(RuntimeException ex){
+        List<String> errors = List.of(ex.getMessage());
+        Map<String,Object> body = Map.of("errors:",errors);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+
+    }
+
     // Unexpected error
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGeneral(Exception ex) {
@@ -55,4 +64,5 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
+
 }

@@ -60,7 +60,7 @@ public class AuthController {
         }
 
         Set<Role> assignedRoles = (request.getRoles() == null || request.getRoles().isEmpty())
-                ? Set.of(Role.ROLE_READER)
+                ? Set.of(Role.READER)
                 : request.getRoles();
 
         User user = new User(
@@ -75,7 +75,7 @@ public class AuthController {
         userRepository.save(user);
 
         List<String> roles = user.getRoles().stream()
-                .map(Enum::name) // Convierte cada Role en su String ("ROLE_ADMIN", etc.)
+                .map(Enum::name)
                 .toList();
 
         String token = jwtService.generateToken(user.getUsername(), roles);

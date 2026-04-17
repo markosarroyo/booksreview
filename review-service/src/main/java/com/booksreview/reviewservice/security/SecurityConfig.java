@@ -1,4 +1,5 @@
-package com.booksreview.bookservice.security;
+package com.booksreview.reviewservice.security;
+
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +35,7 @@ public class SecurityConfig {
                         })
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/api/books/**").permitAll() // Sigue siendo público
+                        .requestMatchers(HttpMethod.GET, "/api/reviews/**").permitAll() // Sigue siendo público
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated() // El resto solo requiere login, el "quién" se decide en el controller
                 )
