@@ -58,7 +58,7 @@ public class BookController {
         return ResponseEntity.ok(bookService.save(book));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         bookService.deleteById(id);
