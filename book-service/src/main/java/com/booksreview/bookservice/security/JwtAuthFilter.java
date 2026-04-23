@@ -1,5 +1,6 @@
 package com.booksreview.bookservice.security;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,25 +37,33 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         String jwt = authHeader.substring(7);
-        String username = jwtService.extractUsername(jwt);
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        try {
+            String username = jwtService.extractUsername(jwt);
 
-            if (jwtService.isTokenValid(jwt)) {
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                List<String> roles = jwtService.extractRoles(jwt);
+                if (jwtService.isTokenValid(jwt)) {
 
-                List<SimpleGrantedAuthority> authorities = roles.stream()
-                        .map(SimpleGrantedAuthority::new)
-                        .toList();
+                    List<String> roles = jwtService.extractRoles(jwt);
 
-                UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(username, null, authorities);
+                    List<SimpleGrantedAuthority> authorities = roles.stream()
+                            .map(SimpleGrantedAuthority::new)
+                            .toList();
 
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(username, null, authorities);
+
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
             }
         }
-
+        catch (ExpiredJwtException e){
+            logger.warn("El token JWT ha expirado");
+        }
+        catch (Exception e){
+            logger.warn("Excepción general en JwtAuthFilter");
+        }
         filterChain.doFilter(request, response);
     }
 }

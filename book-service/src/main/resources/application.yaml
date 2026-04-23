@@ -11,3 +11,9 @@ server:
 jwt:
   secret: "EnunLugardelamanchadecuyonombrenoquieroacordarmeviviaunhidalgo"
   expiration: 3600000
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

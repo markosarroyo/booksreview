@@ -34,8 +34,8 @@ public class SecurityConfig {
                         })
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/api/books/**").permitAll() // Sigue siendo público
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/books","/api/books/**").permitAll() // Sigue siendo público
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**","/error").permitAll()
                         .anyRequest().authenticated() // El resto solo requiere login, el "quién" se decide en el controller
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
