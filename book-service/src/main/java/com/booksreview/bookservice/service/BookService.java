@@ -1,6 +1,8 @@
 package com.booksreview.bookservice.service;
 
 import com.booksreview.bookservice.client.UserServiceClient;
+import com.booksreview.bookservice.dto.BookRequestDTO;
+import com.booksreview.bookservice.dto.BookResponseDTO;
 import com.booksreview.bookservice.dto.BookWithAuthorDTO;
 import com.booksreview.bookservice.model.Book;
 import com.booksreview.bookservice.repository.BookRespository;
@@ -41,8 +43,15 @@ public class BookService {
         return bookRespository.findByGenre(genre);
     }
 
-    public Book save(Book book) {
-        return bookRespository.save(book);
+    public BookResponseDTO save(BookRequestDTO book) {
+        return toResponseDTO(bookRespository.save(toEntity(book)));
+    }
+
+    // Nuevo save para update — recibe DTO + id
+    public BookResponseDTO update(String id, BookRequestDTO dto) {
+        Book book = toEntity(dto);
+        book.setId(id);
+        return toResponseDTO(bookRespository.save(book));
     }
 
     public void deleteById(String id) {
@@ -72,5 +81,27 @@ public class BookService {
                 .collect(Collectors.toList());
     }
 
+    // Añadir al service — convierte BookRequestDTO → Book
+    private Book toEntity(BookRequestDTO dto) {
+        Book book = new Book();
+        book.setTitle(dto.getTitle());
+        book.setSummary(dto.getSummary());
+        book.setGenre(dto.getGenre());
+        book.setCoverUrl(dto.getCoverUrl());
+        book.setAuthorId(dto.getAuthorId());
+        return book;
+    }
+
+    // Convierte Book → BookResponseDTO
+    public BookResponseDTO toResponseDTO(Book book) {
+        return new BookResponseDTO(
+                book.getId(),
+                book.getTitle(),
+                book.getSummary(),
+                book.getGenre(),
+                book.getCoverUrl(),
+                book.getAuthorId()
+        );
+    }
 
 }

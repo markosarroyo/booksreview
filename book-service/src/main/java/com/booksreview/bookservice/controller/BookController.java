@@ -1,7 +1,8 @@
 package com.booksreview.bookservice.controller;
 
+import com.booksreview.bookservice.dto.BookRequestDTO;
+import com.booksreview.bookservice.dto.BookResponseDTO;
 import com.booksreview.bookservice.dto.BookWithAuthorDTO;
-import com.booksreview.bookservice.model.Book;
 import com.booksreview.bookservice.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -10,52 +11,61 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
+
     private final BookService bookService;
 
-    public BookController (BookService bookService){
+    public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
     @GetMapping
-    public List<Book> findAll(){
-        return bookService.findAll();
+    public List<BookResponseDTO> findAll() {
+        return bookService.findAll().stream()
+                .map(bookService::toResponseDTO)
+                .toList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> findById(@PathVariable String id) {
+    public ResponseEntity<BookResponseDTO> findById(@PathVariable String id) {
         return bookService.findById(id)
+                .map(bookService::toResponseDTO)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/genre/{genre}")
-    public List<Book> findByGenre(@PathVariable String genre) {
-        return bookService.findByGenre(genre);
+    public List<BookResponseDTO> findByGenre(@PathVariable String genre) {
+        return bookService.findByGenre(genre).stream()
+                .map(bookService::toResponseDTO)
+                .toList();
     }
 
     @GetMapping("/author/{authorId}")
-    public List<Book> findByAuthor(@PathVariable String authorId) {
-        return bookService.findByAuthorId(authorId);
+    public List<BookResponseDTO> findByAuthor(@PathVariable String authorId) {
+        return bookService.findByAuthorId(authorId).stream()
+                .map(bookService::toResponseDTO)
+                .toList();
     }
 
     @GetMapping("/search")
-    public List<Book> search(@RequestParam String title) {
-        return bookService.findByTitle(title);
+    public List<BookResponseDTO> search(@RequestParam String title) {
+        return bookService.findByTitle(title).stream()
+                .map(bookService::toResponseDTO)
+                .toList();
     }
 
     @PostMapping
-    public ResponseEntity<Book> create(@Valid @RequestBody Book book) {
-        return ResponseEntity.status(201).body(bookService.save(book));
+    public ResponseEntity<BookResponseDTO> create(@Valid @RequestBody BookRequestDTO dto) {
+        return ResponseEntity.status(201).body(bookService.save(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> update(@PathVariable String id,@Valid @RequestBody Book book) {
-        book.setId(id);
-        return ResponseEntity.ok(bookService.save(book));
+    public ResponseEntity<BookResponseDTO> update(@PathVariable String id,
+                                                  @Valid @RequestBody BookRequestDTO dto) {
+        return ResponseEntity.ok(bookService.update(id, dto));
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -66,7 +76,11 @@ public class BookController {
     }
 
     @GetMapping("/advanced-search")
-    public List <BookWithAuthorDTO> advancedSearch(@RequestParam(required = false) String title, @RequestParam(required = false) String genre, @RequestParam(required = false) String summary, @RequestParam(required = false)  String authorName){
-        return bookService.advancedSearch(title,genre,summary, authorName);
+    public List<BookWithAuthorDTO> advancedSearch(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String genre,
+            @RequestParam(required = false) String summary,
+            @RequestParam(required = false) String authorName) {
+        return bookService.advancedSearch(title, genre, summary, authorName);
     }
 }
