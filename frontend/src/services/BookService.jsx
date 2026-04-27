@@ -1,9 +1,9 @@
-import axios from 'axios'
+import axiosAuth from './axiosAuth'
 
-const BASE_URL = 'http://localhost:8081/api/books'
+const BASE_URL = 'http://localhost:8082/api/books'
 
-export const getBooks = () => axios.get(BASE_URL)
+export const getBooks = () => axiosAuth.get(BASE_URL)
 
-export const getBookById = (id) => axios.get(`${BASE_URL}/${id}`)
+export const getBookById = (id) => axiosAuth.get(`${BASE_URL}/${id}`)
 
-export const advancedSearch = (params) => axios.get(`${BASE_URL}/advanced-search`, { params })
+export const advancedSearch = (params) => axiosAuth.get(`${BASE_URL}/advanced-search`, { params })
