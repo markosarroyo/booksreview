@@ -8,8 +8,8 @@ export const authService = {
     return data // { token }
   },
 
-  async register(username, email, password) {
-    const { data } = await axios.post(`${BASE_URL}/register`, { username, email, password })
+  async register(name, username, email, password) {
+    const { data } = await axios.post(`${BASE_URL}/register`, { name, username, email, password })
     return data // { token }
   },
 

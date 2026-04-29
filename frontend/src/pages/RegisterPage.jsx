@@ -7,7 +7,7 @@ export function RegisterPage() {
   const { register } = useAuth();
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({ username: '', email: '', password: '', confirm: '' });
+const [form, setForm] = useState({ name: '', username: '', email: '', password: '', confirm: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -28,7 +28,7 @@ export function RegisterPage() {
 
     setLoading(true);
     try {
-      await register(form.username, form.email, form.password);
+      await register(form.name, form.username, form.email, form.password);
       navigate('/', { replace: true });
     } catch (err) {
       setError(err.message);
@@ -51,6 +51,19 @@ export function RegisterPage() {
         </div>
 
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
+          <div className="auth-field">
+            <label htmlFor="name">Nombre completo</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autoComplete="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Tu nombre"
+              required
+            />
+          </div>          
           <div className="auth-field">
             <label htmlFor="username">Usuario</label>
             <input

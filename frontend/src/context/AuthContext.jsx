@@ -28,8 +28,8 @@ export function AuthProvider({ children }) {
     setUser({ username: payload.sub, roles: payload.roles ?? [] })
   }, [])
 
-  const register = useCallback(async (username, email, password) => {
-    const { token } = await authService.register(username, email, password)
+  const register = useCallback(async (name, username, email, password) => {
+    const { token } = await authService.register(name, username, email, password)
     authService.saveToken(token)
     const payload = authService.decodeToken(token)
     setToken(token)

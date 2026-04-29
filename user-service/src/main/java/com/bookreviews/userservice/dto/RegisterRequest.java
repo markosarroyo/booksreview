@@ -9,6 +9,7 @@ import java.util.Set;
 @Data
 public class RegisterRequest {
 
+
     @NotBlank(message = "Please inform user name")
     @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String name;
@@ -26,8 +27,5 @@ public class RegisterRequest {
     @Size(min = 6, max = 20, message = "Password must be between 6 and 20 characters")
     private String password;
 
-    // Cambiamos Role por Set<Role>
-    // Usamos @NotEmpty porque una colección no debe estar vacía
-    @NotEmpty
-    private Set<Role> roles;
+
 }

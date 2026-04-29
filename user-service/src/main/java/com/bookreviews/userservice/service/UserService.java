@@ -42,10 +42,13 @@ public class UserService {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RuntimeException("Email already exists");
         }
-
+/*
         Set<Role> assignedRoles = (request.getRoles() == null || request.getRoles().isEmpty())
                 ? Set.of(Role.READER)
                 : request.getRoles();
+*/
+
+        Set<Role> assignedRoles = Set.of(Role.READER);
 
         User user = new User(
                 null,
