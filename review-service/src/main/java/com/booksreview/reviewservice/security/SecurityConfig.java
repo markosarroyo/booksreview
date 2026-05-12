@@ -24,8 +24,6 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> {
-                })
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
@@ -35,7 +33,7 @@ public class SecurityConfig {
                         })
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/api/reviews/**").permitAll() // Sigue siendo público
+                        .requestMatchers(HttpMethod.GET, "/api/reviews/**").permitAll() // Sigue siendo públicoaa
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated() // El resto solo requiere login, el "quién" se decide en el controller
                 )

@@ -1,6 +1,6 @@
 import axiosAuth from './axiosAuth'
 
-const BASE_URL = 'http://localhost:8082/api/books'
+const BASE_URL = 'http://localhost:8080/api/books'
 
 export const getBooks = () => axiosAuth.get(BASE_URL)
 

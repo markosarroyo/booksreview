@@ -1,6 +1,6 @@
 import axiosAuth from './axiosAuth'
 
-const BASE_URL = 'http://localhost:8083/api/reviews'
+const BASE_URL = 'http://localhost:8080/api/reviews'
 
 export const getReviewsByBook = (bookId) => axiosAuth.get(`${BASE_URL}/book/${bookId}`)
 export const getAverageRating = (bookId) => axiosAuth.get(`${BASE_URL}/book/${bookId}/rating`)
